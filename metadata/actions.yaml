@@ -1,0 +1,14 @@
+actions:
+  - name: createPaymentForUser
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:3000/payment/createPaymentForUser
+custom_types:
+  enums: []
+  input_objects:
+    - name: SampleInput
+    - name: CreatePaymentForUserArgs
+  objects:
+    - name: SampleOutput
+    - name: PaymentOutput
+  scalars: []

@@ -1,0 +1,27 @@
+type Mutation {
+  createPaymentForUser(
+    params: CreatePaymentForUserArgs!
+  ): PaymentOutput
+}
+
+input SampleInput {
+  username: String!
+  password: String!
+}
+
+input CreatePaymentForUserArgs {
+  product_id: Int!
+  user_id: Int!
+  quantity: Int!
+}
+
+type SampleOutput {
+  accessToken: String!
+}
+
+type PaymentOutput {
+  total: Float!
+  paymentResult: Boolean!
+  receiptNumber: Int!
+}
+

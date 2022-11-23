@@ -4,12 +4,18 @@ import {
   TrackedHasuraEventHandler,
 } from '@golevelup/nestjs-hasura';
 import { Injectable } from '@nestjs/common';
-
+import { gql } from 'graphql-request';
 interface User {
   id: number;
   email: string;
 }
-
+gql`
+  mutation createUser($input: user_insert_input!) {
+    insert_user_one(object: $input) {
+      id
+    }
+  }
+`;
 @Injectable()
 export class UserService {
   @TrackedHasuraEventHandler({

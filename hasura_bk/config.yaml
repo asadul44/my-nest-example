@@ -1,0 +1,7 @@
+version: 3
+endpoint: http://localhost:8080 #hasura endpoint
+admin_secret: FD92hRPHYH7tw7RpCbl93TokRibBnDJOqI6smi5okVkWE7teUNzeh3OfoE9MI2cy
+metadata_directory: metadata
+actions:
+  kind: synchronous
+  handler_webhook_baseurl: http://localhost:3000

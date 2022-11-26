@@ -30,10 +30,12 @@ services:
       ## uncomment next line to run console offline (i.e load console assets from server instead of CDN)
       # HASURA_GRAPHQL_CONSOLE_ASSETS_DIR: /srv/console-assets
       ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: 'anonymous'
       HASURA_GRAPHQL_ENABLE_REMOTE_SCHEMA_PERMISSIONS: 'true'
       HASURA_GRAPHQL_ADMIN_SECRET: FD92hRPHYH7tw7RpCbl93TokRibBnDJOqI6smi5okVkWE7teUNzeh3OfoE9MI2cy
       NESTJS_BASE_URL: ${NESTJS_BASE_URL}
       NESTJS_EVENT_WEBHOOK_ENDPOINT: ${NESTJS_BASE_URL}/hasura/events
       NESTJS_EVENT_WEBHOOK_SHARED_SECRET: ${NESTJS_EVENT_WEBHOOK_SHARED_SECRET}
+
 volumes:
   db_data:

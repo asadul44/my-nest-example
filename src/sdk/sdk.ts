@@ -23,7 +23,7 @@ export type Scalars = {
 
 export type CreateHouseInput = {
   /** Example field (placeholder) */
-  exampleField: Scalars['Int'];
+  house_name: Scalars['Int'];
 };
 
 export type CreatePaymentForUserArgs = {
@@ -35,27 +35,7 @@ export type CreatePaymentForUserArgs = {
 export type House = {
   __typename?: 'House';
   /** Example field (placeholder) */
-  exampleField: Scalars['Int'];
-  /** fetch data from the table: "user" */
-  user: Array<User>;
-  /** fetch aggregated fields from the table: "user" */
-  user_aggregate: User_Aggregate;
-};
-
-export type HouseUserArgs = {
-  distinct_on: InputMaybe<Array<User_Select_Column>>;
-  limit: InputMaybe<Scalars['Int']>;
-  offset: InputMaybe<Scalars['Int']>;
-  order_by: InputMaybe<Array<User_Order_By>>;
-  where: InputMaybe<User_Bool_Exp>;
-};
-
-export type HouseUser_AggregateArgs = {
-  distinct_on: InputMaybe<Array<User_Select_Column>>;
-  limit: InputMaybe<Scalars['Int']>;
-  offset: InputMaybe<Scalars['Int']>;
-  order_by: InputMaybe<Array<User_Order_By>>;
-  where: InputMaybe<User_Bool_Exp>;
+  id: Scalars['Int'];
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -71,11 +51,28 @@ export type Int_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['Int']>>;
 };
 
+export type LoginOrRegisterUserOutput = {
+  __typename?: 'LoginOrRegisterUserOutput';
+  error: Maybe<Scalars['String']>;
+  token: Maybe<Scalars['String']>;
+};
+
+export type LoginUserArgs = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
 export type PaymentOutput = {
   __typename?: 'PaymentOutput';
   paymentResult: Scalars['Boolean'];
   receiptNumber: Scalars['Int'];
   total: Scalars['Float'];
+};
+
+export type RegisterUserArgs = {
+  displayName?: InputMaybe<Scalars['String']>;
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -113,7 +110,7 @@ export type String_Comparison_Exp = {
 
 export type UpdateHouseInput = {
   /** Example field (placeholder) */
-  exampleField?: InputMaybe<Scalars['Int']>;
+  house_name?: InputMaybe<Scalars['Int']>;
   id: Scalars['Int'];
 };
 
@@ -341,6 +338,8 @@ export type Mutation_Root = {
   insert_user: Maybe<User_Mutation_Response>;
   /** insert a single row into the table: "user" */
   insert_user_one: Maybe<User>;
+  login: Maybe<LoginOrRegisterUserOutput>;
+  registerUser: Maybe<LoginOrRegisterUserOutput>;
   removeHouse: House;
   updateHouse: House;
   /** update data of the table: "accounts" */
@@ -409,6 +408,16 @@ export type Mutation_RootInsert_UserArgs = {
 export type Mutation_RootInsert_User_OneArgs = {
   object: User_Insert_Input;
   on_conflict: InputMaybe<User_On_Conflict>;
+};
+
+/** mutation root */
+export type Mutation_RootLoginArgs = {
+  params: InputMaybe<LoginUserArgs>;
+};
+
+/** mutation root */
+export type Mutation_RootRegisterUserArgs = {
+  params: InputMaybe<RegisterUserArgs>;
 };
 
 /** mutation root */
@@ -611,7 +620,7 @@ export type Subscription_RootUser_StreamArgs = {
 /** columns and relationships of "user" */
 export type User = {
   __typename?: 'user';
-  desplay_name: Maybe<Scalars['String']>;
+  display_name: Maybe<Scalars['String']>;
   email: Scalars['String'];
   house_id: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -659,7 +668,7 @@ export type User_Bool_Exp = {
   _and?: InputMaybe<Array<User_Bool_Exp>>;
   _not?: InputMaybe<User_Bool_Exp>;
   _or?: InputMaybe<Array<User_Bool_Exp>>;
-  desplay_name?: InputMaybe<String_Comparison_Exp>;
+  display_name?: InputMaybe<String_Comparison_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
   house_id?: InputMaybe<Int_Comparison_Exp>;
   id?: InputMaybe<Int_Comparison_Exp>;
@@ -680,7 +689,7 @@ export type User_Inc_Input = {
 
 /** input type for inserting data into table "user" */
 export type User_Insert_Input = {
-  desplay_name?: InputMaybe<Scalars['String']>;
+  display_name?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   house_id?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['Int']>;
@@ -690,7 +699,7 @@ export type User_Insert_Input = {
 /** aggregate max on columns */
 export type User_Max_Fields = {
   __typename?: 'user_max_fields';
-  desplay_name: Maybe<Scalars['String']>;
+  display_name: Maybe<Scalars['String']>;
   email: Maybe<Scalars['String']>;
   house_id: Maybe<Scalars['Int']>;
   id: Maybe<Scalars['Int']>;
@@ -700,7 +709,7 @@ export type User_Max_Fields = {
 /** aggregate min on columns */
 export type User_Min_Fields = {
   __typename?: 'user_min_fields';
-  desplay_name: Maybe<Scalars['String']>;
+  display_name: Maybe<Scalars['String']>;
   email: Maybe<Scalars['String']>;
   house_id: Maybe<Scalars['Int']>;
   id: Maybe<Scalars['Int']>;
@@ -725,7 +734,7 @@ export type User_On_Conflict = {
 
 /** Ordering options when selecting data from "user". */
 export type User_Order_By = {
-  desplay_name?: InputMaybe<Order_By>;
+  display_name?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
   house_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
@@ -740,7 +749,7 @@ export type User_Pk_Columns_Input = {
 /** select columns of table "user" */
 export enum User_Select_Column {
   /** column name */
-  DesplayName = 'desplay_name',
+  DisplayName = 'display_name',
   /** column name */
   Email = 'email',
   /** column name */
@@ -753,7 +762,7 @@ export enum User_Select_Column {
 
 /** input type for updating data in table "user" */
 export type User_Set_Input = {
-  desplay_name?: InputMaybe<Scalars['String']>;
+  display_name?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   house_id?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['Int']>;
@@ -791,7 +800,7 @@ export type User_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type User_Stream_Cursor_Value_Input = {
-  desplay_name?: InputMaybe<Scalars['String']>;
+  display_name?: InputMaybe<Scalars['String']>;
   email?: InputMaybe<Scalars['String']>;
   house_id?: InputMaybe<Scalars['Int']>;
   id?: InputMaybe<Scalars['Int']>;
@@ -808,7 +817,7 @@ export type User_Sum_Fields = {
 /** update columns of table "user" */
 export enum User_Update_Column {
   /** column name */
-  DesplayName = 'desplay_name',
+  DisplayName = 'display_name',
   /** column name */
   Email = 'email',
   /** column name */
@@ -863,12 +872,7 @@ export type FindUserByEmailQueryVariables = Exact<{
 
 export type FindUserByEmailQuery = {
   __typename?: 'query_root';
-  user: Array<{
-    password_hash: any;
-    __typename?: 'user';
-    id: number;
-    password: string | null;
-  }>;
+  user: Array<{ __typename?: 'user'; id: number; password: string | null }>;
 };
 
 export const CreateUserDocument = gql`

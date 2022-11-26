@@ -18,19 +18,21 @@ export const InjectSdk = () => Inject(SDK);
     GraphQLRequestModule.forRootAsync(GraphQLRequestModule, {
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
-        const endpoint = configService.get<string>(
-          'http://localhost:8080/v1/graphql',
-        );
-        const secret = configService.get<string>(
-          'FD92hRPHYH7tw7RpCbl93TokRibBnDJOqI6smi5okVkWE7teUNzeh3OfoE9MI2cy',
-        );
-
+        // const endpoint = configService.get<string>(
+        //   'http://localhost:8080/v1/graphql',
+        // );
+        // const secret = configService.get<string>(
+        //   'FD92hRPHYH7tw7RpCbl93TokRibBnDJOqI6smi5okVkWE7teUNzeh3OfoE9MI2cy',
+        // );
+        const endpoint = 'http://localhost:8080/v1/graphql';
+        // console.log(endpoint, secret);
         return {
           endpoint,
           options: {
             headers: {
               'content-type': 'application/json',
-              'x-hasura-admin-secret': secret,
+              'x-hasura-admin-secret':
+                'FD92hRPHYH7tw7RpCbl93TokRibBnDJOqI6smi5okVkWE7teUNzeh3OfoE9MI2cy',
             },
           },
         };

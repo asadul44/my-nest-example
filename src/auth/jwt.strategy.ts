@@ -15,6 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: UserJwtClaims) {
+    console.log(payload, 'payloadsdsd');
     return {
       userId: parseInt(
         payload['https://hasura.io/jwt/claims']['x-hasura-user-id'],

@@ -65,10 +65,7 @@ export class AuthService {
         error: `Could not find user for email ${email}`,
       };
     }
-    const passwordMatch = await bcrypt.compare(
-      password,
-      foundUser.password_hash,
-    );
+    const passwordMatch = await bcrypt.compare(password, foundUser.password);
     if (!passwordMatch) {
       return {
         error: 'Email and password do not match',
@@ -90,15 +87,16 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log(hashedPassword);
     try {
-      const { insert_user_one: user } = await this.sdk.createUser({
+      const { insert_user_one } = await this.sdk.createUser({
         input: {
           email,
           password: hashedPassword,
-          desplay_name: displayName,
+          display_name: displayName,
         },
       });
-      const { id } = user;
-      console.log(user, 'user');
+      console.log(insert_user_one, 'user');
+      const { id } = insert_user_one;
+
       const token = await this.signHasuraToken(id);
       console.log(token, 'token');
       return {
@@ -118,14 +116,15 @@ export class AuthService {
   }
 
   private signHasuraToken(userId: number) {
+    console.log(userId, 'fgdfdfdrer');
     const payload: UserJwtClaims = {
       'https://hasura.io/jwt/claims': {
-        'x-hasura-allowed-roles': ['user'],
-        'x-hasura-default-role': 'user',
+        'x-hasura-allowed-roles': ['user', 'admin'],
+        'x-hasura-default-role': 'admin',
         'x-hasura-user-id': String(userId),
       },
     };
-    console.log(payload, 'payload');
+    console.log(payload, 'ewee');
     return this.jwtService.signAsync(payload);
   }
 }

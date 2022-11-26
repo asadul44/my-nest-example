@@ -49,36 +49,3 @@ const codeGenConfig = {
 };
 
 module.exports = codeGenConfig;
-
-// module.exports = {
-//   schema: [
-//     {
-//       'http://localhost:8080/v1/graphql': {
-//         headers: {
-//           'x-hasura-admin-secret':
-//             'FD92hRPHYH7tw7RpCbl93TokRibBnDJOqI6smi5okVkWE7teUNzeh3OfoE9MI2cy',
-//         },
-//       },
-//     },
-//   ],
-//   documents: ['./src/**/*.tsx', './src/**/*.ts'],
-//   overwrite: true,
-//   generates: {
-//     './src/generated/graphql.tsx': {
-//       plugins: [
-//         'typescript',
-//         'typescript-operations',
-//         'typescript-react-apollo',
-//       ],
-//       config: {
-//         skipTypename: false,
-//         withHooks: true,
-//         withHOC: false,
-//         withComponent: false,
-//       },
-//     },
-//     './graphql.schema.json': {
-//       plugins: ['introspection'],
-//     },
-//   },
-// };

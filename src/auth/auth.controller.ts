@@ -29,7 +29,7 @@ export class AuthController {
     @Body() payload: HasuraActionsPayload<{ params: RegisterUserArgs }>,
   ) {
     const { input } = payload;
-    console.log(input, payload);
+    // console.log(input, payload);
     return this.authService.registerUser(input.params);
   }
 }

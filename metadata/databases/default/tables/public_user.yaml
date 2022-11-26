@@ -2,17 +2,43 @@ table:
   name: user
   schema: public
 select_permissions:
+  - role: anonymous
+    permission:
+      columns: []
+      filter: {}
   - role: user
     permission:
       columns:
-        - desplay_name
+        - display_name
         - email
+        - house_id
         - id
         - password
       filter:
         id:
           _eq: X-Hasura-User-Id
+      allow_aggregations: true
 event_triggers:
+  - name: user-created
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 15
+      num_retries: 3
+      timeout_sec: 100
+    webhook: http://host.docker.internal:3000/hasura/events
+    headers:
+      - name: nestjs-event-webhook
+        value: super_secret
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
   - name: user-updated
     definition:
       enable_manual: false
@@ -20,23 +46,17 @@ event_triggers:
         columns:
           - email
     retry_conf:
-      num_retries: 3
       interval_sec: 15
+      num_retries: 3
       timeout_sec: 100
-    webhook_from_env: NESTJS_EVENT_WEBHOOK_ENDPOINT
+    webhook: http://host.docker.internal:3000/hasura/events
     headers:
       - name: nestjs-event-webhook
-        value_from_env: NESTJS_EVENT_WEBHOOK_SHARED_SECRET
-  - name: user-created
-    definition:
-      enable_manual: false
-      insert:
-        columns: '*'
-    retry_conf:
-      num_retries: 3
-      interval_sec: 15
-      timeout_sec: 100
-    webhook_from_env: NESTJS_EVENT_WEBHOOK_ENDPOINT
-    headers:
-      - name: nestjs-event-webhook
-        value_from_env: NESTJS_EVENT_WEBHOOK_SHARED_SECRET
+        value: super_secret
+    cleanup_config:
+      batch_size: 10000
+      clean_invocation_logs: false
+      clear_older_than: 168
+      paused: true
+      schedule: 0 0 * * *
+      timeout: 60
